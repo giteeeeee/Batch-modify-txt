@@ -1,21 +1,39 @@
 import os
 
+# prompt the user to enter a directory location for modifying text files
+dir_path = input("Enter the directory for target txt files (leave empty to use the same directory as this script): ").strip()
+
+# if no directory path is entered, use the same directory as the script
+if not dir_path:
+    cwd = os.getcwd()
+else:
+    cwd = dir_path
+
+# prompt the user to enter the insert text and comma position
 insert_text = input("Enter the text to insert: ")
 insert_pos = int(input("Enter the comma position to insert the text after (0 to insert at beginning): "))
 
-cwd = os.getcwd()
-
+# loop through all files in the specified directory
 for filename in os.listdir(cwd):
+    # check if the file is a txt file
     if filename.endswith(".txt"):
+        # create a list to store the updated lines
         updated_lines = []
-        with open(filename, "r") as f:
+        # open the file for reading
+        with open(os.path.join(cwd, filename), "r") as f:
+            # loop through each line in the file
             for line in f:
+                # split the line into a list of strings
                 line_list = line.strip().split(",")
+                # insert the text at the specified position
                 if insert_pos == 0:
                     line_list.insert(0, insert_text)
                 else:
                     line_list.insert(insert_pos, insert_text)
+                # join the list back into a string and add it to the updated lines list
                 updated_lines.append(",".join(line_list))
-        with open(filename, "w") as f:
+        # open the file for writing
+        with open(os.path.join(cwd, filename), "w") as f:
+            # write each updated line to the file
             for line in updated_lines:
                 f.write(line + "\n")
