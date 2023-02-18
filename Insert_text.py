@@ -1,13 +1,16 @@
 import os
 
 # prompt the user to enter a directory location for modifying text files
-dir_path = input("Enter the directory for target txt files (leave empty to use the same directory as this script): ").strip()
-
-# if no directory path is entered, use the same directory as the script
-if not dir_path:
-    cwd = os.getcwd()
-else:
-    cwd = dir_path
+while True:
+    dir_path = input("Enter the directory path for modifying txt files (leave empty to use the same directory as the script): ").strip()
+    if not dir_path:
+        cwd = os.getcwd()
+        break
+    if os.path.isdir(dir_path):
+        cwd = dir_path
+        break
+    else:
+        print("Directory not found. Please enter a valid directory path.")
 
 # prompt the user to enter the insert text and comma position
 insert_text = input("Enter the text to insert: ")
