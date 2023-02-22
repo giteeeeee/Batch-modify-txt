@@ -32,7 +32,7 @@ for filename in os.listdir(cwd):
                 if insert_pos == 0:
                     line_list.insert(0, insert_text)
                 else:
-                    line_list.insert(insert_pos, insert_text)
+                    line_list.insert(insert_pos, " " + insert_text)
                 # join the list back into a string and add it to the updated lines list
                 updated_lines.append(",".join(line_list))
         # open the file for writing
@@ -40,3 +40,12 @@ for filename in os.listdir(cwd):
             # write each updated line to the file
             for line in updated_lines:
                 f.write(line + "\n")
+
+if insert_pos == 0:
+    for filename in os.listdir(cwd):
+        if filename.endswith(".txt"):
+            filepath = os.path.join(cwd, filename)
+            with open(filepath, "r") as f:
+                text = f.read()
+            with open(filepath, "w") as f:
+                f.write(text.replace(",", ", ", 1))
